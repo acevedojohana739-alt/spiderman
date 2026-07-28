@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un Mensaje Especial ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:linear-gradient(180deg,#07111f,#b00020);
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:0;
+}
+
+.card{
+position:relative;
+z-index:2;
+width:90%;
+max-width:650px;
+padding:35px;
+border-radius:20px;
+background:rgba(0,0,0,.65);
+color:white;
+text-align:center;
+box-shadow:0 0 30px rgba(255,0,0,.6);
+animation:subir 2s;
+}
+
+h1{
+font-size:38px;
+margin-bottom:20px;
+color:#ff3b3b;
+}
+
+#mensaje{
+font-size:22px;
+line-height:1.7;
+min-height:220px;
+}
+
+button{
+margin-top:20px;
+padding:15px 35px;
+font-size:18px;
+border:none;
+border-radius:40px;
+cursor:pointer;
+background:#ff2d55;
+color:white;
+transition:.4s;
+}
+
+button:hover{
+transform:scale(1.1);
+background:#0066ff;
+}
+
+.corazon{
+font-size:45px;
+animation:latido 1s infinite;
+margin-top:20px;
+display:none;
+}
+
+@keyframes latido{
+0%{transform:scale(1);}
+50%{transform:scale(1.3);}
+100%{transform:scale(1);}
+}
+
+@keyframes subir{
+from{
+opacity:0;
+transform:translateY(80px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.web{
+position:absolute;
+top:-10px;
+left:50%;
+transform:translateX(-50%);
+font-size:60px;
+opacity:.7;
+}
+
+.spider{
+position:absolute;
+top:-100px;
+left:50%;
+font-size:50px;
+animation:bajar 5s infinite ease-in-out;
+}
+
+@keyframes bajar{
+0%{
+transform:translateY(-100px);
+}
+50%{
+transform:translateY(140px);
+}
+100%{
+transform:translateY(-100px);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div class="card">
+
+<div class="web">🕸️🕸️🕸️</div>
+
+<div class="spider">🕷️</div>
+
+<h1>Para Ti ❤️</h1>
+
+<div id="mensaje"></div>
+
+<button onclick="escribir()">Abrir Mensaje</button>
+
+<div class="corazon" id="heart">❤️</div>
+
+</div>
+
+<script>
+
+const texto="En el poco tiempo que hemos pasado juntos, te has convertido en una persona muy especial en mi vida.\n\nGracias por cada sonrisa, cada conversación y cada momento compartido.\n\nNo sé qué nos prepare el destino, pero sí sé que conocerte ha sido una de las cosas más bonitas que me han pasado.\n\n❤️";
+
+let i=0;
+
+function escribir(){
+
+document.querySelector("button").style.display="none";
+
+function maquina(){
+
+if(i<texto.length){
+
+document.getElementById("mensaje").innerHTML+=texto.charAt(i);
+
+i++;
+
+setTimeout(maquina,45);
+
+}else{
+
+document.getElementById("heart").style.display="block";
+
+}
+
+}
+
+maquina();
+
+}
+
+// Fondo animado
+
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particulas=[];
+
+for(let i=0;i<120;i++){
+
+particulas.push({
+
+x:Math.random()*canvas.width,
+
+y:Math.random()*canvas.height,
+
+r:Math.random()*2+1,
+
+v:Math.random()*1+0.2
+
+});
+
+}
+
+function animar(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="rgba(255,255,255,.8)";
+
+particulas.forEach(p=>{
+
+ctx.beginPath();
+
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
+ctx.fill();
+
+p.y+=p.v;
+
+if(p.y>canvas.height){
+
+p.y=0;
+
+p.x=Math.random()*canvas.width;
+
+}
+
+});
+
+requestAnimationFrame(animar);
+
+}
+
+animar();
+
+</script>
+
+</body>
+</html>
